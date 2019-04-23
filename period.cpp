@@ -8,8 +8,8 @@ using namespace std;
 Given a function f: {0,...,m-1} -> {0,...,m-1}, and a seed X_0,
 Let X_i = f(X_(i-1)) for i >= 1.
 
-This function computes the smallest µ such that X_0,...,X_(µ-1) are distinct, but X_µ is equal to X_r for some r < µ.
-as well as computes p such that X_µ = X_(u+kp) for all k >= 0. That is, f is p-periodic starting at µ given seed X_0.
+This function computes the smallest µ,p such that X_0,...,X_(µ+p-1) are distinct, but X_(n+p) = X_n for n >= µ.
+That is, f is p-periodic starting at µ given seed X_0.
 
 Memory: O(1) 
 Time: O(µ+p)
@@ -49,6 +49,33 @@ vector<int> findPeriod(int (*f)(int), int seed){
 	period[1] = p; //period
 
 	return period;
+}
+
+
+/* 
+l(n) = largest power of 2 <= n
+	
+	n 	| 1  2  3  4  5  6  7  8  9  10  11  12  13  14  15 ...
+ l(n)-1	| 0  1  1  3  3  3  3  7  7   7   7   7   7   7   7 ...
+
+*/
+/* Stop generating numbers from a pseudorandom sequence when a repetition occurs. Return the period of the sequence. TODO */
+int generator(int (*f)(int), int seed){
+	// unfinished
+	int X = seed, Y = seed;
+	int k = 1, m = 1;
+
+	X = f(X);
+	k--;
+	if(X == Y){
+		//period = m - k
+		return X;
+	}
+	else if(k == 0){
+		Y = X;
+		m *= 2;
+		k = m;
+	}
 }
 
 int main(){
